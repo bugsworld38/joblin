@@ -7,11 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "migrate:make": "knex migrate:make -x ts",
-    "migrate:latest": "knex migrate:latest",
-    "migrate:rollback": "knex migrate:rollback",
-    "migrate:status": "knex migrate:status",
-    "migrate:unlock": "knex migrate:unlock",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "start": "nest start",

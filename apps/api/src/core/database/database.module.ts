@@ -27,15 +27,6 @@ export const KNEX_CONNECTION = 'KNEX_CONNECTION';
             min: 2,
             max: 10,
           },
-          migrations: {
-            directory: '../../database/migrations',
-            extension: 'ts',
-            tableName: 'knex_migrations',
-          },
-          seeds: {
-            directory: './database/seeds',
-            extension: 'ts',
-          },
           ...knexStringcase(),
         }),
     },

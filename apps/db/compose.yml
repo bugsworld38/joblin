@@ -1,0 +1,37 @@
+services:
+  postgresdb:
+    image: postgres:16-alpine
+    container_name: joblin-db
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - joblin_postgres_data:/var/lib/postgresql/data
+    networks:
+      - migrations
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrations:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: joblin-migrations
+    env_file:
+      - .env
+    networks:
+      - migrations
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+
+volumes:
+  joblin_postgres_data:
+
+networks:
+  migrations:
+    driver: bridge
