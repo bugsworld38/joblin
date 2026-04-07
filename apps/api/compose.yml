@@ -1,0 +1,37 @@
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    container_name: joblin-dev-api
+    command: npm run start:dev:poll
+    environment:
+      - .env
+      - PORT=3001
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/home/node/app
+    networks:
+      - primary
+
+  postgresdb:
+    image: postgres:16-alpine
+    container_name: joblin-db
+    environment:
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    volumes:
+      - './.volumes/postgresql:/var/lib/postgresql'
+    networks:
+      - primary
+
+networks:
+  primary:
+    driver: bridge
