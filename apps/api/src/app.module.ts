@@ -3,21 +3,21 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
-import { AuthModule } from '@core/auth/auth.module';
+import { ApplicationModule } from '@application';
+import { AuthModule } from '@auth';
 import {
   appConfig,
   authConfig,
   databaseConfig,
   envValidationSchema,
   swaggerConfig,
-} from '@core/config';
-import { DatabaseModule } from '@core/database/database.module';
-import { HealthModule } from '@core/health/health.module';
-import { ApplicationsModule } from '@modules/applications/applications.module';
-import { RefreshTokensModule } from '@modules/refresh-tokens/refresh-tokens.module';
-import { ScraperModule } from '@modules/scraper/scraper.module';
-import { UsersModule } from '@modules/users/users.module';
-import { VacanciesModule } from '@modules/vacancies/vacancies.module';
+} from '@config';
+import { DatabaseModule } from '@database';
+import { HealthModule } from '@health';
+import { RefreshTokenModule } from '@refresh-token';
+import { ScraperModule } from '@scraper';
+import { UserModule } from '@user';
+import { VacancyModule } from '@vacancy';
 
 @Module({
   imports: [
@@ -35,11 +35,11 @@ import { VacanciesModule } from '@modules/vacancies/vacancies.module';
     }),
     DatabaseModule,
     HealthModule,
-    UsersModule,
+    UserModule,
     AuthModule,
-    RefreshTokensModule,
-    VacanciesModule,
-    ApplicationsModule,
+    RefreshTokenModule,
+    VacancyModule,
+    ApplicationModule,
     ScraperModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],

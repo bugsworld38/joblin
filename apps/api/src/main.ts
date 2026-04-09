@@ -10,7 +10,7 @@ import {
   SwaggerConfig,
   appConfig,
   swaggerConfig,
-} from '@core/config';
+} from '@config';
 
 import { AppModule } from './app.module';
 

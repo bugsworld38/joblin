@@ -1,4 +1,36 @@
 services:
+  postgresdb:
+    image: postgres:16-alpine
+    container_name: joblin-db
+    env_file:
+      - ./apps/db/.env
+    ports:
+      - "5432:5432"
+    # expose:
+    #   - "5432"
+    volumes:
+      - joblin_postgres_data:/var/lib/postgresql/data
+    networks:
+      - joblin
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrations:
+    build:
+      context: ./apps/db
+      dockerfile: Dockerfile
+    container_name: joblin-migrations
+    env_file:
+      - ./apps/db/.env
+    networks:
+      - joblin
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+
   api:
     build:
       context: ./apps/api
@@ -15,23 +47,10 @@ services:
     volumes:
       - ./apps/api:/home/node/app
     networks:
-      - primary
+      - joblin
     depends_on:
       migrations:
         condition: service_completed_successfully
-
-  migrations:
-    build:
-      context: ./apps/db
-      dockerfile: Dockerfile
-    container_name: joblin-migrations
-    env_file:
-      - ./apps/db/.env
-    networks:
-      - primary
-    depends_on:
-      postgresdb:
-        condition: service_healthy
 
   frontend:
     build:
@@ -48,30 +67,12 @@ services:
       - ./apps/frontend/vite.config.ts:/home/node/app/vite.config.ts:ro
       - ./apps/frontend/svelte.config.js:/home/node/app/svelte.config.js:ro
     networks:
-      - primary
-
-  postgresdb:
-    image: postgres:16-alpine
-    container_name: joblin-db
-    env_file:
-      - ./apps/db/.env
-    ports:
-      - "5432:5432"
-    expose:
-      - "5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - primary
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - joblin
 
 volumes:
-  pgdata:
+  joblin_postgres_data:
 
 networks:
-  primary:
-    driver: bridge
+  joblin:
+    name: joblin_network
+    external: true
