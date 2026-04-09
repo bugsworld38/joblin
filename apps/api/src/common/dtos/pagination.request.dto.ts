@@ -3,7 +3,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber, Min } from 'class-validator';
 
-export class PaginationDto {
+export class PaginationRequestDto {
   @ApiPropertyOptional({
     description: 'Page number',
     minimum: 1,

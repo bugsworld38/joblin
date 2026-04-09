@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { PaginationDto } from '@common/dtos';
+import { PaginationRequestDto } from '@common/dtos';
 import { calculateOffset } from '@common/utils';
 
 import { ApplicationRepository } from './application.repository';
@@ -28,7 +28,7 @@ export class ApplicationService {
     return this.applicationRepo.create({ userId, vacancyId });
   }
 
-  async listWithVacancies(userId: string, dto: PaginationDto) {
+  async listWithVacancies(userId: string, dto: PaginationRequestDto) {
     const offset = calculateOffset(dto.page, dto.pageSize);
 
     return this.applicationRepo.listWithVacancies(userId, {

@@ -25,7 +25,7 @@ import { VacancyService } from '@vacancy';
 import { CreateVacancyRequestDto } from '@vacancy/dtos';
 import { plainToInstance } from 'class-transformer';
 
-import { PaginatedResponseDto, PaginationDto } from '@common/dtos';
+import { PaginatedResponseDto, PaginationRequestDto } from '@common/dtos';
 
 import { ApplicationService } from './application.service';
 import {
@@ -81,7 +81,7 @@ export class ApplicationController {
   @ApiResponse({ status: HttpStatus.OK, type: PaginatedResponseDto })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   async listWithVacancies(
-    @Query() paginationDto: PaginationDto,
+    @Query() paginationDto: PaginationRequestDto,
     @CurrentUser() currentUser: User,
   ) {
     const { data, totalCount } =

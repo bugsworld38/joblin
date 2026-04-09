@@ -8,8 +8,8 @@ import { DatabaseIndicator } from './indicators/database.indicator';
 @Controller('health')
 export class HealthController {
   constructor(
-    private health: HealthCheckService,
-    private database: DatabaseIndicator,
+    private readonly health: HealthCheckService,
+    private readonly database: DatabaseIndicator,
   ) {}
 
   @Get()
