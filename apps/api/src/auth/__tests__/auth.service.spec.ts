@@ -1,12 +1,15 @@
-import { BadRequestException, ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import * as bcrypt from 'bcrypt';
-
 import { RefreshTokenRepository } from '@refresh-token';
-import type { User } from '@user/interfaces';
 import { UserRepository } from '@user';
+import type { User } from '@user/interfaces';
+import * as bcrypt from 'bcrypt';
 
 import { AuthService } from '../auth.service';
 
@@ -56,7 +59,9 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
     userRepo = module.get<UserRepository>(UserRepository);
-    refreshTokenRepo = module.get<RefreshTokenRepository>(RefreshTokenRepository);
+    refreshTokenRepo = module.get<RefreshTokenRepository>(
+      RefreshTokenRepository,
+    );
     jwtService = module.get<JwtService>(JwtService);
 
     jest.clearAllMocks();
@@ -72,7 +77,9 @@ describe('AuthService', () => {
     it('should throw ConflictException if user already exists', async () => {
       mockUserRepo.findByEmail.mockResolvedValue(mockUser);
 
-      await expect(service.register(registerDto)).rejects.toThrow(ConflictException);
+      await expect(service.register(registerDto)).rejects.toThrow(
+        ConflictException,
+      );
     });
 
     it('should successfully register a user and return tokens', async () => {
@@ -110,18 +117,18 @@ describe('AuthService', () => {
     it('should throw BadRequestException if user not found', async () => {
       mockUserRepo.findByEmail.mockResolvedValue(null);
 
-      await expect(service.validateUser('wrong@email.com', 'pass')).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.validateUser('wrong@email.com', 'pass'),
+      ).rejects.toThrow(BadRequestException);
     });
 
     it('should throw BadRequestException if password does not match', async () => {
       mockUserRepo.findByEmail.mockResolvedValue(mockUser);
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);
 
-      await expect(service.validateUser(mockUser.email, 'wrongpass')).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.validateUser(mockUser.email, 'wrongpass'),
+      ).rejects.toThrow(BadRequestException);
     });
 
     it('should return user if credentials are valid', async () => {
@@ -139,11 +146,15 @@ describe('AuthService', () => {
     it('should throw UnauthorizedException if token not found in DB', async () => {
       mockRefreshTokenRepo.findByTokenHash.mockResolvedValue(null);
 
-      await expect(service.refresh(incomingRefreshToken)).rejects.toThrow(UnauthorizedException);
+      await expect(service.refresh(incomingRefreshToken)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException if token is revoked', async () => {
-      mockRefreshTokenRepo.findByTokenHash.mockResolvedValue({ isRevoked: true });
+      mockRefreshTokenRepo.findByTokenHash.mockResolvedValue({
+        isRevoked: true,
+      });
 
       await expect(service.refresh(incomingRefreshToken)).rejects.toThrow(
         'Refresh token is compromised',
@@ -180,7 +191,9 @@ describe('AuthService', () => {
 
       const result = await service.refresh(incomingRefreshToken);
 
-      expect(refreshTokenRepo.revoke).toHaveBeenCalledWith(storedToken.tokenHash);
+      expect(refreshTokenRepo.revoke).toHaveBeenCalledWith(
+        storedToken.tokenHash,
+      );
       expect(refreshTokenRepo.create).toHaveBeenCalled();
       expect(result).toHaveProperty('accessToken');
     });

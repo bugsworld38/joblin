@@ -18,9 +18,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { plainToInstance } from 'class-transformer';
-
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
+import { plainToInstance } from 'class-transformer';
 
 import {
   CreateVacancyRequestDto,
@@ -39,7 +38,10 @@ export class VacancyController {
   @Post()
   @ApiOperation({ summary: 'Create a new vacancy' })
   @ApiResponse({ status: HttpStatus.CREATED, type: VacancyResponseDto })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid input data' })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Invalid input data',
+  })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   async create(@Body() createVacancyDto: CreateVacancyRequestDto) {
     const vacancy = await this.vacancyService.create(createVacancyDto);
@@ -58,8 +60,14 @@ export class VacancyController {
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a vacancy' })
   @ApiParam({ name: 'id', description: 'Vacancy ID' })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Vacancy deleted successfully' })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Vacancy not found' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Vacancy deleted successfully',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Vacancy not found',
+  })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
   async delete(@Param('id') id: string) {
     return this.vacancyService.delete(id);

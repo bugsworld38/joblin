@@ -25,7 +25,18 @@ export interface IFindRefreshTokenByTokenHashQuery {
   result: IFindRefreshTokenByTokenHashResult;
 }
 
-const findRefreshTokenByTokenHashIR: any = {"usedParamSet":{"tokenHash":true},"params":[{"name":"tokenHash","required":false,"transform":{"type":"scalar"},"locs":[{"a":48,"b":57}]}],"statement":"SELECT *\nFROM refresh_tokens\nWHERE token_hash = :tokenHash"};
+const findRefreshTokenByTokenHashIR: any = {
+  usedParamSet: { tokenHash: true },
+  params: [
+    {
+      name: 'tokenHash',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 48, b: 57 }],
+    },
+  ],
+  statement: 'SELECT *\nFROM refresh_tokens\nWHERE token_hash = :tokenHash',
+};
 
 /**
  * Query generated from SQL:
@@ -35,8 +46,10 @@ const findRefreshTokenByTokenHashIR: any = {"usedParamSet":{"tokenHash":true},"p
  * WHERE token_hash = :tokenHash
  * ```
  */
-export const findRefreshTokenByTokenHash = new PreparedQuery<IFindRefreshTokenByTokenHashParams,IFindRefreshTokenByTokenHashResult>(findRefreshTokenByTokenHashIR);
-
+export const findRefreshTokenByTokenHash = new PreparedQuery<
+  IFindRefreshTokenByTokenHashParams,
+  IFindRefreshTokenByTokenHashResult
+>(findRefreshTokenByTokenHashIR);
 
 /** 'CreateRefreshToken' parameters type */
 export interface ICreateRefreshTokenParams {
@@ -62,7 +75,31 @@ export interface ICreateRefreshTokenQuery {
   result: ICreateRefreshTokenResult;
 }
 
-const createRefreshTokenIR: any = {"usedParamSet":{"userId":true,"tokenHash":true,"expiresAt":true},"params":[{"name":"userId","required":false,"transform":{"type":"scalar"},"locs":[{"a":69,"b":75}]},{"name":"tokenHash","required":false,"transform":{"type":"scalar"},"locs":[{"a":78,"b":87}]},{"name":"expiresAt","required":false,"transform":{"type":"scalar"},"locs":[{"a":90,"b":99}]}],"statement":"INSERT INTO refresh_tokens (user_id, token_hash, expires_at)\nVALUES (:userId, :tokenHash, :expiresAt)\nRETURNING *"};
+const createRefreshTokenIR: any = {
+  usedParamSet: { userId: true, tokenHash: true, expiresAt: true },
+  params: [
+    {
+      name: 'userId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 69, b: 75 }],
+    },
+    {
+      name: 'tokenHash',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 78, b: 87 }],
+    },
+    {
+      name: 'expiresAt',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 90, b: 99 }],
+    },
+  ],
+  statement:
+    'INSERT INTO refresh_tokens (user_id, token_hash, expires_at)\nVALUES (:userId, :tokenHash, :expiresAt)\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -72,8 +109,10 @@ const createRefreshTokenIR: any = {"usedParamSet":{"userId":true,"tokenHash":tru
  * RETURNING *
  * ```
  */
-export const createRefreshToken = new PreparedQuery<ICreateRefreshTokenParams,ICreateRefreshTokenResult>(createRefreshTokenIR);
-
+export const createRefreshToken = new PreparedQuery<
+  ICreateRefreshTokenParams,
+  ICreateRefreshTokenResult
+>(createRefreshTokenIR);
 
 /** 'RevokeRefreshToken' parameters type */
 export interface IRevokeRefreshTokenParams {
@@ -89,7 +128,19 @@ export interface IRevokeRefreshTokenQuery {
   result: IRevokeRefreshTokenResult;
 }
 
-const revokeRefreshTokenIR: any = {"usedParamSet":{"tokenHash":true},"params":[{"name":"tokenHash","required":false,"transform":{"type":"scalar"},"locs":[{"a":83,"b":92}]}],"statement":"UPDATE refresh_tokens\nSET is_revoked = true, updated_at = now()\nWHERE token_hash = :tokenHash"};
+const revokeRefreshTokenIR: any = {
+  usedParamSet: { tokenHash: true },
+  params: [
+    {
+      name: 'tokenHash',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 83, b: 92 }],
+    },
+  ],
+  statement:
+    'UPDATE refresh_tokens\nSET is_revoked = true, updated_at = now()\nWHERE token_hash = :tokenHash',
+};
 
 /**
  * Query generated from SQL:
@@ -99,6 +150,7 @@ const revokeRefreshTokenIR: any = {"usedParamSet":{"tokenHash":true},"params":[{
  * WHERE token_hash = :tokenHash
  * ```
  */
-export const revokeRefreshToken = new PreparedQuery<IRevokeRefreshTokenParams,IRevokeRefreshTokenResult>(revokeRefreshTokenIR);
-
-
+export const revokeRefreshToken = new PreparedQuery<
+  IRevokeRefreshTokenParams,
+  IRevokeRefreshTokenResult
+>(revokeRefreshTokenIR);

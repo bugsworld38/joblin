@@ -21,7 +21,18 @@ export interface IFindUserByIdQuery {
   result: IFindUserByIdResult;
 }
 
-const findUserByIdIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":31,"b":33}]}],"statement":"SELECT * FROM users WHERE id = :id"};
+const findUserByIdIR: any = {
+  usedParamSet: { id: true },
+  params: [
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 31, b: 33 }],
+    },
+  ],
+  statement: 'SELECT * FROM users WHERE id = :id',
+};
 
 /**
  * Query generated from SQL:
@@ -29,8 +40,10 @@ const findUserByIdIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id","
  * SELECT * FROM users WHERE id = :id
  * ```
  */
-export const findUserById = new PreparedQuery<IFindUserByIdParams,IFindUserByIdResult>(findUserByIdIR);
-
+export const findUserById = new PreparedQuery<
+  IFindUserByIdParams,
+  IFindUserByIdResult
+>(findUserByIdIR);
 
 /** 'FindUserByEmail' parameters type */
 export interface IFindUserByEmailParams {
@@ -52,7 +65,18 @@ export interface IFindUserByEmailQuery {
   result: IFindUserByEmailResult;
 }
 
-const findUserByEmailIR: any = {"usedParamSet":{"email":true},"params":[{"name":"email","required":false,"transform":{"type":"scalar"},"locs":[{"a":34,"b":39}]}],"statement":"SELECT * FROM users WHERE email = :email"};
+const findUserByEmailIR: any = {
+  usedParamSet: { email: true },
+  params: [
+    {
+      name: 'email',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 34, b: 39 }],
+    },
+  ],
+  statement: 'SELECT * FROM users WHERE email = :email',
+};
 
 /**
  * Query generated from SQL:
@@ -60,8 +84,10 @@ const findUserByEmailIR: any = {"usedParamSet":{"email":true},"params":[{"name":
  * SELECT * FROM users WHERE email = :email
  * ```
  */
-export const findUserByEmail = new PreparedQuery<IFindUserByEmailParams,IFindUserByEmailResult>(findUserByEmailIR);
-
+export const findUserByEmail = new PreparedQuery<
+  IFindUserByEmailParams,
+  IFindUserByEmailResult
+>(findUserByEmailIR);
 
 /** 'CreateUser' parameters type */
 export interface ICreateUserParams {
@@ -84,7 +110,25 @@ export interface ICreateUserQuery {
   result: ICreateUserResult;
 }
 
-const createUserIR: any = {"usedParamSet":{"email":true,"passwordHash":true},"params":[{"name":"email","required":false,"transform":{"type":"scalar"},"locs":[{"a":49,"b":54}]},{"name":"passwordHash","required":false,"transform":{"type":"scalar"},"locs":[{"a":57,"b":69}]}],"statement":"INSERT INTO users (email, password_hash)\nVALUES (:email, :passwordHash)\nRETURNING *"};
+const createUserIR: any = {
+  usedParamSet: { email: true, passwordHash: true },
+  params: [
+    {
+      name: 'email',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 49, b: 54 }],
+    },
+    {
+      name: 'passwordHash',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 57, b: 69 }],
+    },
+  ],
+  statement:
+    'INSERT INTO users (email, password_hash)\nVALUES (:email, :passwordHash)\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -94,6 +138,7 @@ const createUserIR: any = {"usedParamSet":{"email":true,"passwordHash":true},"pa
  * RETURNING *
  * ```
  */
-export const createUser = new PreparedQuery<ICreateUserParams,ICreateUserResult>(createUserIR);
-
-
+export const createUser = new PreparedQuery<
+  ICreateUserParams,
+  ICreateUserResult
+>(createUserIR);

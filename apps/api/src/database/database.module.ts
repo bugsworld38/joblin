@@ -1,9 +1,8 @@
 import { Global, Inject, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 
-import { Pool } from 'pg';
-
 import { databaseConfig } from '@config';
+import { Pool } from 'pg';
 
 @Global()
 @Module({

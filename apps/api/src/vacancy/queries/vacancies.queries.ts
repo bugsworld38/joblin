@@ -22,7 +22,18 @@ export interface IFindVacancyByUrlQuery {
   result: IFindVacancyByUrlResult;
 }
 
-const findVacancyByUrlIR: any = {"usedParamSet":{"url":true},"params":[{"name":"url","required":false,"transform":{"type":"scalar"},"locs":[{"a":36,"b":39}]}],"statement":"SELECT * FROM vacancies WHERE url = :url"};
+const findVacancyByUrlIR: any = {
+  usedParamSet: { url: true },
+  params: [
+    {
+      name: 'url',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 36, b: 39 }],
+    },
+  ],
+  statement: 'SELECT * FROM vacancies WHERE url = :url',
+};
 
 /**
  * Query generated from SQL:
@@ -30,8 +41,10 @@ const findVacancyByUrlIR: any = {"usedParamSet":{"url":true},"params":[{"name":"
  * SELECT * FROM vacancies WHERE url = :url
  * ```
  */
-export const findVacancyByUrl = new PreparedQuery<IFindVacancyByUrlParams,IFindVacancyByUrlResult>(findVacancyByUrlIR);
-
+export const findVacancyByUrl = new PreparedQuery<
+  IFindVacancyByUrlParams,
+  IFindVacancyByUrlResult
+>(findVacancyByUrlIR);
 
 /** 'FindAllVacancies' parameters type */
 export type IFindAllVacanciesParams = void;
@@ -52,7 +65,11 @@ export interface IFindAllVacanciesQuery {
   result: IFindAllVacanciesResult;
 }
 
-const findAllVacanciesIR: any = {"usedParamSet":{},"params":[],"statement":"SELECT * FROM vacancies ORDER BY created_at DESC"};
+const findAllVacanciesIR: any = {
+  usedParamSet: {},
+  params: [],
+  statement: 'SELECT * FROM vacancies ORDER BY created_at DESC',
+};
 
 /**
  * Query generated from SQL:
@@ -60,8 +77,10 @@ const findAllVacanciesIR: any = {"usedParamSet":{},"params":[],"statement":"SELE
  * SELECT * FROM vacancies ORDER BY created_at DESC
  * ```
  */
-export const findAllVacancies = new PreparedQuery<IFindAllVacanciesParams,IFindAllVacanciesResult>(findAllVacanciesIR);
-
+export const findAllVacancies = new PreparedQuery<
+  IFindAllVacanciesParams,
+  IFindAllVacanciesResult
+>(findAllVacanciesIR);
 
 /** 'CreateVacancy' parameters type */
 export interface ICreateVacancyParams {
@@ -86,7 +105,31 @@ export interface ICreateVacancyQuery {
   result: ICreateVacancyResult;
 }
 
-const createVacancyIR: any = {"usedParamSet":{"positionTitle":true,"companyName":true,"url":true},"params":[{"name":"positionTitle","required":false,"transform":{"type":"scalar"},"locs":[{"a":66,"b":79}]},{"name":"companyName","required":false,"transform":{"type":"scalar"},"locs":[{"a":82,"b":93}]},{"name":"url","required":false,"transform":{"type":"scalar"},"locs":[{"a":96,"b":99}]}],"statement":"INSERT INTO vacancies (position_title, company_name, url)\nVALUES (:positionTitle, :companyName, :url)\nRETURNING *"};
+const createVacancyIR: any = {
+  usedParamSet: { positionTitle: true, companyName: true, url: true },
+  params: [
+    {
+      name: 'positionTitle',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 66, b: 79 }],
+    },
+    {
+      name: 'companyName',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 82, b: 93 }],
+    },
+    {
+      name: 'url',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 96, b: 99 }],
+    },
+  ],
+  statement:
+    'INSERT INTO vacancies (position_title, company_name, url)\nVALUES (:positionTitle, :companyName, :url)\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -96,8 +139,10 @@ const createVacancyIR: any = {"usedParamSet":{"positionTitle":true,"companyName"
  * RETURNING *
  * ```
  */
-export const createVacancy = new PreparedQuery<ICreateVacancyParams,ICreateVacancyResult>(createVacancyIR);
-
+export const createVacancy = new PreparedQuery<
+  ICreateVacancyParams,
+  ICreateVacancyResult
+>(createVacancyIR);
 
 /** 'DeleteVacancy' parameters type */
 export interface IDeleteVacancyParams {
@@ -113,7 +158,18 @@ export interface IDeleteVacancyQuery {
   result: IDeleteVacancyResult;
 }
 
-const deleteVacancyIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":33,"b":35}]}],"statement":"DELETE FROM vacancies WHERE id = :id"};
+const deleteVacancyIR: any = {
+  usedParamSet: { id: true },
+  params: [
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 33, b: 35 }],
+    },
+  ],
+  statement: 'DELETE FROM vacancies WHERE id = :id',
+};
 
 /**
  * Query generated from SQL:
@@ -121,6 +177,7 @@ const deleteVacancyIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id",
  * DELETE FROM vacancies WHERE id = :id
  * ```
  */
-export const deleteVacancy = new PreparedQuery<IDeleteVacancyParams,IDeleteVacancyResult>(deleteVacancyIR);
-
-
+export const deleteVacancy = new PreparedQuery<
+  IDeleteVacancyParams,
+  IDeleteVacancyResult
+>(deleteVacancyIR);

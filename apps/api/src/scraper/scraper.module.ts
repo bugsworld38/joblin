@@ -6,17 +6,25 @@ import {
   SCRAPER_AXIOS_INSTANCE_TOKEN,
   SCRAPER_STRATEGIES_TOKEN,
 } from './scraper.constants';
-import { ScraperService } from './services/scraper.service';
+import { ScraperService } from './scraper.service';
 import { DjinniStrategy } from './strategies/djinni.strategy';
+import { DouStrategy } from './strategies/dou.strategy';
+import { LinkedinStrategy } from './strategies/linkedin.strategy';
 
 @Module({
   providers: [
     ScraperService,
     DjinniStrategy,
+    DouStrategy,
+    LinkedinStrategy,
     {
       provide: SCRAPER_STRATEGIES_TOKEN,
-      inject: [DjinniStrategy],
-      useFactory: (djinni: DjinniStrategy) => [djinni],
+      inject: [DjinniStrategy, DouStrategy, LinkedinStrategy],
+      useFactory: (
+        djinni: DjinniStrategy,
+        dou: DouStrategy,
+        linkedin: LinkedinStrategy,
+      ) => [djinni, dou, linkedin],
     },
     {
       provide: SCRAPER_AXIOS_INSTANCE_TOKEN,

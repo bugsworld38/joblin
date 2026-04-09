@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { ScraperService } from '@scraper/services/scraper.service';
+import { ScraperService } from '@scraper';
 
 import { CreateVacancyRequestDto } from './dtos';
 import { VacancyRepository } from './vacancy.repository';
@@ -13,7 +13,9 @@ export class VacancyService {
   ) {}
 
   async create(createVacancyDto: CreateVacancyRequestDto) {
-    const existingVacancy = await this.vacancyRepo.findByUrl(createVacancyDto.url);
+    const existingVacancy = await this.vacancyRepo.findByUrl(
+      createVacancyDto.url,
+    );
 
     if (existingVacancy) {
       return existingVacancy;

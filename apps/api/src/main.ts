@@ -2,15 +2,9 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { AppConfig, SwaggerConfig, appConfig, swaggerConfig } from '@config';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-
-import {
-  AppConfig,
-  SwaggerConfig,
-  appConfig,
-  swaggerConfig,
-} from '@config';
 
 import { AppModule } from './app.module';
 

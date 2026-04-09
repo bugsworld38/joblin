@@ -6,12 +6,12 @@ import { SCRAPER_AXIOS_INSTANCE_TOKEN } from '../scraper.constants';
 import { BaseScraperStrategy } from './base-scraper.strategy';
 
 @Injectable()
-export class DjinniStrategy extends BaseScraperStrategy {
-  readonly name = 'djinni';
-  protected readonly hostname = 'djinni.co';
+export class LinkedinStrategy extends BaseScraperStrategy {
+  readonly name = 'linkedin';
+  protected readonly hostname = 'linkedin.com';
   protected readonly selectors = {
-    positionTitle: ['h1'],
-    companyName: ['a.text-secondary[href*="/jobs/company-"]'],
+    positionTitle: ['h3.base-search-card__title'],
+    companyName: ['a.hidden-nested-link[href*="/company/"]'],
   };
 
   constructor(@Inject(SCRAPER_AXIOS_INSTANCE_TOKEN) axios: AxiosInstance) {

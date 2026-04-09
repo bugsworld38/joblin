@@ -14,7 +14,10 @@ export class RefreshTokenRepository {
   constructor(private readonly pool: Pool) {}
 
   async findByTokenHash(tokenHash: string): Promise<RefreshToken | undefined> {
-    const [token] = await findRefreshTokenByTokenHash.run({ tokenHash }, this.pool);
+    const [token] = await findRefreshTokenByTokenHash.run(
+      { tokenHash },
+      this.pool,
+    );
     return token;
   }
 

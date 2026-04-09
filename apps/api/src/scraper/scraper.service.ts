@@ -1,12 +1,13 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 
-import { ScraperStrategy } from '../interfaces';
-import { SCRAPER_STRATEGIES_TOKEN } from '../scraper.constants';
+import { ScraperStrategy } from './interfaces';
+import { SCRAPER_STRATEGIES_TOKEN } from './scraper.constants';
 
 @Injectable()
 export class ScraperService {
   constructor(
-    @Inject(SCRAPER_STRATEGIES_TOKEN) private strategies: ScraperStrategy[],
+    @Inject(SCRAPER_STRATEGIES_TOKEN)
+    private readonly strategies: ScraperStrategy[],
   ) {}
 
   async parse(url: string) {

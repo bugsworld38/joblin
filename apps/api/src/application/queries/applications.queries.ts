@@ -1,7 +1,14 @@
 /** Types generated for queries found in "src/application/queries/applications.sql" */
 import { PreparedQuery } from '@pgtyped/runtime';
 
-export type application_status = 'archived' | 'followed_up' | 'interview' | 'offer' | 'reject' | 'sent_cv' | 'test_task';
+export type application_status =
+  | 'archived'
+  | 'followed_up'
+  | 'interview'
+  | 'offer'
+  | 'reject'
+  | 'sent_cv'
+  | 'test_task';
 
 export type NumberOrString = number | string;
 
@@ -27,7 +34,18 @@ export interface IFindApplicationByIdQuery {
   result: IFindApplicationByIdResult;
 }
 
-const findApplicationByIdIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":38,"b":40}]}],"statement":"SELECT * FROM applications WHERE id = :id"};
+const findApplicationByIdIR: any = {
+  usedParamSet: { id: true },
+  params: [
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 38, b: 40 }],
+    },
+  ],
+  statement: 'SELECT * FROM applications WHERE id = :id',
+};
 
 /**
  * Query generated from SQL:
@@ -35,8 +53,10 @@ const findApplicationByIdIR: any = {"usedParamSet":{"id":true},"params":[{"name"
  * SELECT * FROM applications WHERE id = :id
  * ```
  */
-export const findApplicationById = new PreparedQuery<IFindApplicationByIdParams,IFindApplicationByIdResult>(findApplicationByIdIR);
-
+export const findApplicationById = new PreparedQuery<
+  IFindApplicationByIdParams,
+  IFindApplicationByIdResult
+>(findApplicationByIdIR);
 
 /** 'FindApplicationByUserAndVacancy' parameters type */
 export interface IFindApplicationByUserAndVacancyParams {
@@ -61,7 +81,25 @@ export interface IFindApplicationByUserAndVacancyQuery {
   result: IFindApplicationByUserAndVacancyResult;
 }
 
-const findApplicationByUserAndVacancyIR: any = {"usedParamSet":{"userId":true,"vacancyId":true},"params":[{"name":"userId","required":false,"transform":{"type":"scalar"},"locs":[{"a":43,"b":49}]},{"name":"vacancyId","required":false,"transform":{"type":"scalar"},"locs":[{"a":68,"b":77}]}],"statement":"SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId"};
+const findApplicationByUserAndVacancyIR: any = {
+  usedParamSet: { userId: true, vacancyId: true },
+  params: [
+    {
+      name: 'userId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 43, b: 49 }],
+    },
+    {
+      name: 'vacancyId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 68, b: 77 }],
+    },
+  ],
+  statement:
+    'SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId',
+};
 
 /**
  * Query generated from SQL:
@@ -69,8 +107,10 @@ const findApplicationByUserAndVacancyIR: any = {"usedParamSet":{"userId":true,"v
  * SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId
  * ```
  */
-export const findApplicationByUserAndVacancy = new PreparedQuery<IFindApplicationByUserAndVacancyParams,IFindApplicationByUserAndVacancyResult>(findApplicationByUserAndVacancyIR);
-
+export const findApplicationByUserAndVacancy = new PreparedQuery<
+  IFindApplicationByUserAndVacancyParams,
+  IFindApplicationByUserAndVacancyResult
+>(findApplicationByUserAndVacancyIR);
 
 /** 'CreateApplication' parameters type */
 export interface ICreateApplicationParams {
@@ -95,7 +135,25 @@ export interface ICreateApplicationQuery {
   result: ICreateApplicationResult;
 }
 
-const createApplicationIR: any = {"usedParamSet":{"userId":true,"vacancyId":true},"params":[{"name":"userId","required":false,"transform":{"type":"scalar"},"locs":[{"a":55,"b":61}]},{"name":"vacancyId","required":false,"transform":{"type":"scalar"},"locs":[{"a":64,"b":73}]}],"statement":"INSERT INTO applications (user_id, vacancy_id)\nVALUES (:userId, :vacancyId)\nRETURNING *"};
+const createApplicationIR: any = {
+  usedParamSet: { userId: true, vacancyId: true },
+  params: [
+    {
+      name: 'userId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 55, b: 61 }],
+    },
+    {
+      name: 'vacancyId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 64, b: 73 }],
+    },
+  ],
+  statement:
+    'INSERT INTO applications (user_id, vacancy_id)\nVALUES (:userId, :vacancyId)\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -105,8 +163,10 @@ const createApplicationIR: any = {"usedParamSet":{"userId":true,"vacancyId":true
  * RETURNING *
  * ```
  */
-export const createApplication = new PreparedQuery<ICreateApplicationParams,ICreateApplicationResult>(createApplicationIR);
-
+export const createApplication = new PreparedQuery<
+  ICreateApplicationParams,
+  ICreateApplicationResult
+>(createApplicationIR);
 
 /** 'UpdateApplicationStatus' parameters type */
 export interface IUpdateApplicationStatusParams {
@@ -131,7 +191,25 @@ export interface IUpdateApplicationStatusQuery {
   result: IUpdateApplicationStatusResult;
 }
 
-const updateApplicationStatusIR: any = {"usedParamSet":{"status":true,"id":true},"params":[{"name":"status","required":false,"transform":{"type":"scalar"},"locs":[{"a":33,"b":39}]},{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":72,"b":74}]}],"statement":"UPDATE applications\nSET status = :status, updated_at = now()\nWHERE id = :id\nRETURNING *"};
+const updateApplicationStatusIR: any = {
+  usedParamSet: { status: true, id: true },
+  params: [
+    {
+      name: 'status',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 33, b: 39 }],
+    },
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 72, b: 74 }],
+    },
+  ],
+  statement:
+    'UPDATE applications\nSET status = :status, updated_at = now()\nWHERE id = :id\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -142,8 +220,10 @@ const updateApplicationStatusIR: any = {"usedParamSet":{"status":true,"id":true}
  * RETURNING *
  * ```
  */
-export const updateApplicationStatus = new PreparedQuery<IUpdateApplicationStatusParams,IUpdateApplicationStatusResult>(updateApplicationStatusIR);
-
+export const updateApplicationStatus = new PreparedQuery<
+  IUpdateApplicationStatusParams,
+  IUpdateApplicationStatusResult
+>(updateApplicationStatusIR);
 
 /** 'UpdateApplicationNotes' parameters type */
 export interface IUpdateApplicationNotesParams {
@@ -168,7 +248,25 @@ export interface IUpdateApplicationNotesQuery {
   result: IUpdateApplicationNotesResult;
 }
 
-const updateApplicationNotesIR: any = {"usedParamSet":{"notes":true,"id":true},"params":[{"name":"notes","required":false,"transform":{"type":"scalar"},"locs":[{"a":32,"b":37}]},{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":70,"b":72}]}],"statement":"UPDATE applications\nSET notes = :notes, updated_at = now()\nWHERE id = :id\nRETURNING *"};
+const updateApplicationNotesIR: any = {
+  usedParamSet: { notes: true, id: true },
+  params: [
+    {
+      name: 'notes',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 32, b: 37 }],
+    },
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 70, b: 72 }],
+    },
+  ],
+  statement:
+    'UPDATE applications\nSET notes = :notes, updated_at = now()\nWHERE id = :id\nRETURNING *',
+};
 
 /**
  * Query generated from SQL:
@@ -179,8 +277,10 @@ const updateApplicationNotesIR: any = {"usedParamSet":{"notes":true,"id":true},"
  * RETURNING *
  * ```
  */
-export const updateApplicationNotes = new PreparedQuery<IUpdateApplicationNotesParams,IUpdateApplicationNotesResult>(updateApplicationNotesIR);
-
+export const updateApplicationNotes = new PreparedQuery<
+  IUpdateApplicationNotesParams,
+  IUpdateApplicationNotesResult
+>(updateApplicationNotesIR);
 
 /** 'DeleteApplication' parameters type */
 export interface IDeleteApplicationParams {
@@ -196,7 +296,18 @@ export interface IDeleteApplicationQuery {
   result: IDeleteApplicationResult;
 }
 
-const deleteApplicationIR: any = {"usedParamSet":{"id":true},"params":[{"name":"id","required":false,"transform":{"type":"scalar"},"locs":[{"a":36,"b":38}]}],"statement":"DELETE FROM applications WHERE id = :id"};
+const deleteApplicationIR: any = {
+  usedParamSet: { id: true },
+  params: [
+    {
+      name: 'id',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 36, b: 38 }],
+    },
+  ],
+  statement: 'DELETE FROM applications WHERE id = :id',
+};
 
 /**
  * Query generated from SQL:
@@ -204,8 +315,10 @@ const deleteApplicationIR: any = {"usedParamSet":{"id":true},"params":[{"name":"
  * DELETE FROM applications WHERE id = :id
  * ```
  */
-export const deleteApplication = new PreparedQuery<IDeleteApplicationParams,IDeleteApplicationResult>(deleteApplicationIR);
-
+export const deleteApplication = new PreparedQuery<
+  IDeleteApplicationParams,
+  IDeleteApplicationResult
+>(deleteApplicationIR);
 
 /** 'CountApplicationsByUser' parameters type */
 export interface ICountApplicationsByUserParams {
@@ -223,7 +336,19 @@ export interface ICountApplicationsByUserQuery {
   result: ICountApplicationsByUserResult;
 }
 
-const countApplicationsByUserIR: any = {"usedParamSet":{"userId":true},"params":[{"name":"userId","required":false,"transform":{"type":"scalar"},"locs":[{"a":60,"b":66}]}],"statement":"SELECT COUNT(id) AS count FROM applications WHERE user_id = :userId"};
+const countApplicationsByUserIR: any = {
+  usedParamSet: { userId: true },
+  params: [
+    {
+      name: 'userId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 60, b: 66 }],
+    },
+  ],
+  statement:
+    'SELECT COUNT(id) AS count FROM applications WHERE user_id = :userId',
+};
 
 /**
  * Query generated from SQL:
@@ -231,8 +356,10 @@ const countApplicationsByUserIR: any = {"usedParamSet":{"userId":true},"params":
  * SELECT COUNT(id) AS count FROM applications WHERE user_id = :userId
  * ```
  */
-export const countApplicationsByUser = new PreparedQuery<ICountApplicationsByUserParams,ICountApplicationsByUserResult>(countApplicationsByUserIR);
-
+export const countApplicationsByUser = new PreparedQuery<
+  ICountApplicationsByUserParams,
+  ICountApplicationsByUserResult
+>(countApplicationsByUserIR);
 
 /** 'ListApplicationsWithVacancies' parameters type */
 export interface IListApplicationsWithVacanciesParams {
@@ -259,7 +386,31 @@ export interface IListApplicationsWithVacanciesQuery {
   result: IListApplicationsWithVacanciesResult;
 }
 
-const listApplicationsWithVacanciesIR: any = {"usedParamSet":{"userId":true,"limit":true,"offset":true},"params":[{"name":"userId","required":false,"transform":{"type":"scalar"},"locs":[{"a":194,"b":200}]},{"name":"limit","required":false,"transform":{"type":"scalar"},"locs":[{"a":235,"b":240}]},{"name":"offset","required":false,"transform":{"type":"scalar"},"locs":[{"a":249,"b":255}]}],"statement":"SELECT\n  a.id,\n  a.status,\n  a.notes,\n  v.position_title,\n  v.company_name,\n  v.url,\n  a.created_at,\n  a.updated_at\nFROM applications a\nJOIN vacancies v ON a.vacancy_id = v.id\nWHERE a.user_id = :userId\nORDER BY a.created_at DESC\nLIMIT :limit\nOFFSET :offset"};
+const listApplicationsWithVacanciesIR: any = {
+  usedParamSet: { userId: true, limit: true, offset: true },
+  params: [
+    {
+      name: 'userId',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 194, b: 200 }],
+    },
+    {
+      name: 'limit',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 235, b: 240 }],
+    },
+    {
+      name: 'offset',
+      required: false,
+      transform: { type: 'scalar' },
+      locs: [{ a: 249, b: 255 }],
+    },
+  ],
+  statement:
+    'SELECT\n  a.id,\n  a.status,\n  a.notes,\n  v.position_title,\n  v.company_name,\n  v.url,\n  a.created_at,\n  a.updated_at\nFROM applications a\nJOIN vacancies v ON a.vacancy_id = v.id\nWHERE a.user_id = :userId\nORDER BY a.created_at DESC\nLIMIT :limit\nOFFSET :offset',
+};
 
 /**
  * Query generated from SQL:
@@ -281,6 +432,7 @@ const listApplicationsWithVacanciesIR: any = {"usedParamSet":{"userId":true,"lim
  * OFFSET :offset
  * ```
  */
-export const listApplicationsWithVacancies = new PreparedQuery<IListApplicationsWithVacanciesParams,IListApplicationsWithVacanciesResult>(listApplicationsWithVacanciesIR);
-
-
+export const listApplicationsWithVacancies = new PreparedQuery<
+  IListApplicationsWithVacanciesParams,
+  IListApplicationsWithVacanciesResult
+>(listApplicationsWithVacanciesIR);
