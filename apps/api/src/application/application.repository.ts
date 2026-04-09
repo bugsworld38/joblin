@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Pool } from 'pg';
 
-import { PaginatedResult, PaginationParams } from '@common/interfaces';
+import { PaginatedData, PaginationParams } from '@common/interfaces';
 
 import {
   Application,
@@ -27,6 +27,7 @@ export class ApplicationRepository {
 
   async findById(id: string): Promise<Application | undefined> {
     const [application] = await findApplicationById.run({ id }, this.pool);
+
     return application as Application;
   }
 
@@ -38,21 +39,37 @@ export class ApplicationRepository {
       { userId, vacancyId },
       this.pool,
     );
+
     return application as Application;
   }
 
   async create(data: CreateApplicationData): Promise<Application> {
     const [application] = await createApplication.run(data, this.pool);
+
     return application as Application;
   }
 
-  async updateStatus(id: string, status: ApplicationStatus): Promise<Application | undefined> {
-    const [application] = await updateApplicationStatus.run({ id, status }, this.pool);
+  async updateStatus(
+    id: string,
+    status: ApplicationStatus,
+  ): Promise<Application | undefined> {
+    const [application] = await updateApplicationStatus.run(
+      { id, status },
+      this.pool,
+    );
+
     return application as Application;
   }
 
-  async updateNotes(id: string, notes: string | null): Promise<Application | undefined> {
-    const [application] = await updateApplicationNotes.run({ id, notes }, this.pool);
+  async updateNotes(
+    id: string,
+    notes: string | null,
+  ): Promise<Application | undefined> {
+    const [application] = await updateApplicationNotes.run(
+      { id, notes },
+      this.pool,
+    );
+
     return application as Application;
   }
 
@@ -63,8 +80,11 @@ export class ApplicationRepository {
   async listWithVacancies(
     userId: string,
     params: PaginationParams,
-  ): Promise<PaginatedResult<ApplicationWithVacancy>> {
-    const [{ count }] = await countApplicationsByUser.run({ userId }, this.pool);
+  ): Promise<PaginatedData<ApplicationWithVacancy>> {
+    const [{ count }] = await countApplicationsByUser.run(
+      { userId },
+      this.pool,
+    );
 
     const data = await listApplicationsWithVacancies.run(
       { userId, limit: params.limit, offset: params.offset },

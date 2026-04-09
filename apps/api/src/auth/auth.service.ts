@@ -6,11 +6,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import bcrypt from 'bcrypt';
-import { createHash, randomBytes } from 'crypto';
-
 import { RefreshTokenRepository } from '@refresh-token';
 import { UserRepository } from '@user';
+import bcrypt from 'bcrypt';
+import { createHash, randomBytes } from 'crypto';
 
 import { RegisterRequestDto } from './dtos';
 
@@ -66,8 +65,7 @@ export class AuthService {
   }
 
   async generateTokens(userId: string) {
-    // TODO: do not commit expiresIn, changed for local env
-    const accessToken = this.jwtService.sign({ userId }, { expiresIn: '30d' });
+    const accessToken = this.jwtService.sign({ userId }, { expiresIn: '15m' });
     const refreshToken = randomBytes(64).toString('hex');
     const tokenHash = this.hashToken(refreshToken);
 

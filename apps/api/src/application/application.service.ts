@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 import { PaginationDto } from '@common/dtos';
-import { calculatePagination } from '@common/utils';
+import { calculateOffset } from '@common/utils';
 
 import { ApplicationRepository } from './application.repository';
 import { ApplicationStatus } from './interfaces';
@@ -22,19 +22,19 @@ export class ApplicationService {
     );
 
     if (existingApplication) {
-      throw new ConflictException('You are already tracking this vacancy');
+      throw new ConflictException('Already tracking this vacancy');
     }
 
     return this.applicationRepo.create({ userId, vacancyId });
   }
 
-  async listWithVacancies(userId: string, paginationDto: PaginationDto) {
-    const paginationParams = calculatePagination(
-      paginationDto.page,
-      paginationDto.pageSize,
-    );
+  async listWithVacancies(userId: string, dto: PaginationDto) {
+    const offset = calculateOffset(dto.page, dto.pageSize);
 
-    return this.applicationRepo.listWithVacancies(userId, paginationParams);
+    return this.applicationRepo.listWithVacancies(userId, {
+      limit: dto.pageSize,
+      offset,
+    });
   }
 
   async updateStatus(id: string, status: ApplicationStatus) {
@@ -65,7 +65,9 @@ export class ApplicationService {
     }
 
     if (application.userId !== userId) {
-      throw new ForbiddenException('You do not own this application');
+      throw new ForbiddenException(
+        'Cannot delete an application that belongs to another user',
+      );
     }
 
     return this.applicationRepo.delete(application.id);

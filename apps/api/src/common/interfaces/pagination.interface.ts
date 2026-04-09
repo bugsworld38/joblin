@@ -3,7 +3,7 @@ export interface PaginationParams {
   offset: number;
 }
 
-export interface PaginatedResult<T> {
+export interface PaginatedData<T> {
   data: T[];
   totalCount: number;
 }
