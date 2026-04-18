@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   async generateTokens(userId: string) {
-    const accessToken = this.jwtService.sign({ userId }, { expiresIn: '15m' });
+    const accessToken = this.jwtService.sign({ userId }, { expiresIn: '30d' });
     const refreshToken = randomBytes(64).toString('hex');
     const tokenHash = this.hashToken(refreshToken);
 
