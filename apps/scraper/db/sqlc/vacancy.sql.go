@@ -11,13 +11,27 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const expireStaleVacancies = `-- name: ExpireStaleVacancies :exec
+UPDATE vacancies
+SET status = 'expired', updated_at = now()
+WHERE last_seen_at < now() - interval '2 days'
+  AND status = 'active'
+`
+
+func (q *Queries) ExpireStaleVacancies(ctx context.Context) error {
+	_, err := q.db.Exec(ctx, expireStaleVacancies)
+	return err
+}
+
 const upsertVacancy = `-- name: UpsertVacancy :exec
-INSERT INTO vacancies (title, company_name, url)
-VALUES ($1, $2, $3)
+INSERT INTO vacancies (title, company_name, url, source)
+VALUES ($1, $2, $3, $4)
 ON CONFLICT (url) DO UPDATE
    SET
     title = EXCLUDED.title,
     company_name = EXCLUDED.company_name,
+    status = 'active',
+    last_seen_at = now(),
     updated_at = now()
 `
 
@@ -25,9 +39,15 @@ type UpsertVacancyParams struct {
 	Title       string
 	CompanyName string
 	Url         pgtype.Text
+	Source      pgtype.Text
 }
 
 func (q *Queries) UpsertVacancy(ctx context.Context, arg UpsertVacancyParams) error {
-	_, err := q.db.Exec(ctx, upsertVacancy, arg.Title, arg.CompanyName, arg.Url)
+	_, err := q.db.Exec(ctx, upsertVacancy,
+		arg.Title,
+		arg.CompanyName,
+		arg.Url,
+		arg.Source,
+	)
 	return err
 }

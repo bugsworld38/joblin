@@ -35,6 +35,7 @@ func (s *Scraper) Run(ctx context.Context) {
 					Title:       v.Title,
 					CompanyName: v.CompanyName,
 					Url:         pgtype.Text{String: v.Url, Valid: true},
+					Source:      pgtype.Text{String: b.Name(), Valid: true},
 				})
 				if err != nil {
 					log.Printf("[%s] upsert error for %q: %v", b.Name(), v.Url, err)
@@ -46,5 +47,11 @@ func (s *Scraper) Run(ctx context.Context) {
 
 			log.Printf("[%s][%s] saved %d/%d vacancies \n", b.Name(), kw, saved, len(vacancies))
 		}
+	}
+
+	if err := s.queries.ExpireStaleVacancies(ctx); err != nil {
+		log.Printf("expire stale vacancies: %v", err)
+	} else {
+		log.Printf("stale vacancies expired")
 	}
 }

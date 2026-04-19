@@ -135,6 +135,7 @@ type Vacancy struct {
 	Url         pgtype.Text
 	Source      pgtype.Text
 	Status      VacancyStatus
+	LastSeenAt  pgtype.Timestamptz
 	CreatedAt   pgtype.Timestamptz
 	UpdatedAt   pgtype.Timestamptz
 }
