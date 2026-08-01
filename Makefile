@@ -4,16 +4,16 @@ setup:
 	cd apps/db && npm i
 
 network:
-	podman network create "joblin_network" 2>/dev/null || true
+	docker network create "joblin_network" 2>/dev/null || true
 
 dev:
-	podman compose up
+	docker compose up
 
 build:
-	podman compose build
+	docker compose build
 
 clean:
-	podman compose down -v
+	docker compose down -v
 
 db-up:
 	cd apps/db && POSTGRES_HOST=localhost npm run up
