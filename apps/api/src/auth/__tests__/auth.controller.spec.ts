@@ -81,7 +81,10 @@ describe('AuthController', () => {
 
       await controller.logout(mockRequest, mockResponse);
 
-      expect(mockResponse.clearCookie).toHaveBeenCalledWith('refreshToken');
+      expect(mockResponse.clearCookie).toHaveBeenCalledWith('refreshToken', {
+        sameSite: 'none',
+        secure: true,
+      });
       expect(authService.logout).toHaveBeenCalledWith('old_token');
     });
 

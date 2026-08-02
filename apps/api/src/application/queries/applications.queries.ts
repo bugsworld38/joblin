@@ -41,16 +41,25 @@ const findApplicationByIdIR: any = {
       name: 'id',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 38, b: 40 }],
+      locs: [{ a: 170, b: 172 }],
     },
   ],
-  statement: 'SELECT * FROM applications WHERE id = :id',
+  statement:
+    'SELECT\n  id,\n  user_id AS "userId",\n  vacancy_id AS "vacancyId",\n  status,\n  notes,\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"\nFROM applications WHERE id = :id',
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM applications WHERE id = :id
+ * SELECT
+ *   id,
+ *   user_id AS "userId",
+ *   vacancy_id AS "vacancyId",
+ *   status,
+ *   notes,
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
+ * FROM applications WHERE id = :id
  * ```
  */
 export const findApplicationById = new PreparedQuery<
@@ -88,23 +97,31 @@ const findApplicationByUserAndVacancyIR: any = {
       name: 'userId',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 43, b: 49 }],
+      locs: [{ a: 175, b: 181 }],
     },
     {
       name: 'vacancyId',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 68, b: 77 }],
+      locs: [{ a: 200, b: 209 }],
     },
   ],
   statement:
-    'SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId',
+    'SELECT\n  id,\n  user_id AS "userId",\n  vacancy_id AS "vacancyId",\n  status,\n  notes,\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"\nFROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId',
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId
+ * SELECT
+ *   id,
+ *   user_id AS "userId",
+ *   vacancy_id AS "vacancyId",
+ *   status,
+ *   notes,
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
+ * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId
  * ```
  */
 export const findApplicationByUserAndVacancy = new PreparedQuery<
@@ -152,7 +169,7 @@ const createApplicationIR: any = {
     },
   ],
   statement:
-    'INSERT INTO applications (user_id, vacancy_id)\nVALUES (:userId, :vacancyId)\nRETURNING *',
+    'INSERT INTO applications (user_id, vacancy_id)\nVALUES (:userId, :vacancyId)\nRETURNING\n  id,\n  user_id AS "userId",\n  vacancy_id AS "vacancyId",\n  status,\n  notes,\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"',
 };
 
 /**
@@ -160,7 +177,14 @@ const createApplicationIR: any = {
  * ```
  * INSERT INTO applications (user_id, vacancy_id)
  * VALUES (:userId, :vacancyId)
- * RETURNING *
+ * RETURNING
+ *   id,
+ *   user_id AS "userId",
+ *   vacancy_id AS "vacancyId",
+ *   status,
+ *   notes,
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * ```
  */
 export const createApplication = new PreparedQuery<
@@ -208,7 +232,7 @@ const updateApplicationStatusIR: any = {
     },
   ],
   statement:
-    'UPDATE applications\nSET status = :status, updated_at = now()\nWHERE id = :id\nRETURNING *',
+    'UPDATE applications\nSET status = :status, updated_at = now()\nWHERE id = :id\nRETURNING\n  id,\n  user_id AS "userId",\n  vacancy_id AS "vacancyId",\n  status,\n  notes,\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"',
 };
 
 /**
@@ -217,7 +241,14 @@ const updateApplicationStatusIR: any = {
  * UPDATE applications
  * SET status = :status, updated_at = now()
  * WHERE id = :id
- * RETURNING *
+ * RETURNING
+ *   id,
+ *   user_id AS "userId",
+ *   vacancy_id AS "vacancyId",
+ *   status,
+ *   notes,
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * ```
  */
 export const updateApplicationStatus = new PreparedQuery<
@@ -265,7 +296,7 @@ const updateApplicationNotesIR: any = {
     },
   ],
   statement:
-    'UPDATE applications\nSET notes = :notes, updated_at = now()\nWHERE id = :id\nRETURNING *',
+    'UPDATE applications\nSET notes = :notes, updated_at = now()\nWHERE id = :id\nRETURNING\n  id,\n  user_id AS "userId",\n  vacancy_id AS "vacancyId",\n  status,\n  notes,\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"',
 };
 
 /**
@@ -274,7 +305,14 @@ const updateApplicationNotesIR: any = {
  * UPDATE applications
  * SET notes = :notes, updated_at = now()
  * WHERE id = :id
- * RETURNING *
+ * RETURNING
+ *   id,
+ *   user_id AS "userId",
+ *   vacancy_id AS "vacancyId",
+ *   status,
+ *   notes,
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * ```
  */
 export const updateApplicationNotes = new PreparedQuery<
@@ -393,23 +431,23 @@ const listApplicationsWithVacanciesIR: any = {
       name: 'userId',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 194, b: 200 }],
+      locs: [{ a: 251, b: 257 }],
     },
     {
       name: 'limit',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 235, b: 240 }],
+      locs: [{ a: 292, b: 297 }],
     },
     {
       name: 'offset',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 249, b: 255 }],
+      locs: [{ a: 306, b: 312 }],
     },
   ],
   statement:
-    'SELECT\n  a.id,\n  a.status,\n  a.notes,\n  v.position_title,\n  v.company_name,\n  v.url,\n  a.created_at,\n  a.updated_at\nFROM applications a\nJOIN vacancies v ON a.vacancy_id = v.id\nWHERE a.user_id = :userId\nORDER BY a.created_at DESC\nLIMIT :limit\nOFFSET :offset',
+    'SELECT\n  a.id,\n  a.status,\n  a.notes,\n  v.title AS "positionTitle",\n  v.company_name AS "companyName",\n  v.url,\n  a.created_at AS "createdAt",\n  a.updated_at AS "updatedAt"\nFROM applications a\nJOIN vacancies v ON a.vacancy_id = v.id\nWHERE a.user_id = :userId\nORDER BY a.created_at DESC\nLIMIT :limit\nOFFSET :offset',
 };
 
 /**
@@ -419,11 +457,11 @@ const listApplicationsWithVacanciesIR: any = {
  *   a.id,
  *   a.status,
  *   a.notes,
- *   v.position_title,
- *   v.company_name,
+ *   v.title AS "positionTitle",
+ *   v.company_name AS "companyName",
  *   v.url,
- *   a.created_at,
- *   a.updated_at
+ *   a.created_at AS "createdAt",
+ *   a.updated_at AS "updatedAt"
  * FROM applications a
  * JOIN vacancies v ON a.vacancy_id = v.id
  * WHERE a.user_id = :userId

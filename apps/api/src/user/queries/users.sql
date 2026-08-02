@@ -1,10 +1,27 @@
 /* @name FindUserById */
-SELECT * FROM users WHERE id = :id;
+SELECT
+  id,
+  email,
+  password_hash AS "passwordHash",
+  created_at AS "createdAt",
+  updated_at AS "updatedAt"
+FROM users WHERE id = :id;
 
 /* @name FindUserByEmail */
-SELECT * FROM users WHERE email = :email;
+SELECT
+  id,
+  email,
+  password_hash AS "passwordHash",
+  created_at AS "createdAt",
+  updated_at AS "updatedAt"
+FROM users WHERE email = :email;
 
 /* @name CreateUser */
 INSERT INTO users (email, password_hash)
 VALUES (:email, :passwordHash)
-RETURNING *;
+RETURNING
+  id,
+  email,
+  password_hash AS "passwordHash",
+  created_at AS "createdAt",
+  updated_at AS "updatedAt";

@@ -36,7 +36,9 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableShutdownHooks();
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [config.webOrigin, config.extensionOrigin].filter(
+      (origin): origin is string => Boolean(origin),
+    ),
     credentials: true,
   });
 

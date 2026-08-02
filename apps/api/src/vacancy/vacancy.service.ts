@@ -2,7 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 import { ScraperService } from '@scraper';
 
-import { CreateVacancyRequestDto } from './dtos';
+import { calculateOffset } from '@common/utils';
+
+import {
+  CreateVacancyRequestDto,
+  VacancyQueryRequestDto,
+  VacancyQueueRequestDto,
+} from './dtos';
 import { VacancyRepository } from './vacancy.repository';
 
 @Injectable()
@@ -32,8 +38,22 @@ export class VacancyService {
     return this.vacancyRepo.findByUrl(url);
   }
 
-  async findAll() {
-    return this.vacancyRepo.findAll();
+  async findMany(dto: VacancyQueryRequestDto) {
+    const offset = calculateOffset(dto.page, dto.pageSize);
+
+    return this.vacancyRepo.findMany(dto.keyword, {
+      limit: dto.pageSize,
+      offset,
+    });
+  }
+
+  async findQueue(dto: VacancyQueueRequestDto, userId: string) {
+    const offset = calculateOffset(dto.page, dto.pageSize);
+
+    return this.vacancyRepo.findQueue(dto.keyword, userId, {
+      limit: dto.pageSize,
+      offset,
+    });
   }
 
   async lookupSource(url: string) {

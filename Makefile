@@ -2,6 +2,7 @@ setup:
 	cd apps/api && npm i
 	cd apps/frontend && npm i
 	cd apps/db && npm i
+	cd apps/extension && npm i
 
 network:
 	docker network create "joblin_network" 2>/dev/null || true
@@ -32,3 +33,9 @@ api-generate:
 
 api-test:
 	cd apps/api && npm run test
+
+extension-dev:
+	cd apps/extension && npm run dev
+
+extension-build:
+	cd apps/extension && npm run build

@@ -18,24 +18,30 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { CurrentUser } from '@auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
+import type { User } from '@user/interfaces';
 import { plainToInstance } from 'class-transformer';
+
+import { PaginatedResponseDto } from '@common/dtos';
 
 import {
   CreateVacancyRequestDto,
   VacancyPreviewResponseDto,
+  VacancyQueryRequestDto,
+  VacancyQueueRequestDto,
   VacancyResponseDto,
 } from './dtos';
 import { VacancyService } from './vacancy.service';
 
 @ApiTags('vacancies')
-@ApiBearerAuth('jwt')
-@UseGuards(JwtAuthGuard)
 @Controller('vacancies')
 export class VacancyController {
   constructor(private vacancyService: VacancyService) {}
 
   @Post()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new vacancy' })
   @ApiResponse({ status: HttpStatus.CREATED, type: VacancyResponseDto })
   @ApiResponse({
@@ -49,15 +55,60 @@ export class VacancyController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all vacancies' })
-  @ApiResponse({ status: HttpStatus.OK, type: [VacancyResponseDto] })
+  @ApiOperation({
+    summary: 'Get paginated vacancies, optionally filtered by keyword',
+  })
+  @ApiQuery({
+    name: 'keyword',
+    required: false,
+    description: 'Keyword to filter by',
+  })
+  @ApiQuery({ name: 'page', required: false, description: 'Page number' })
+  @ApiQuery({ name: 'pageSize', required: false, description: 'Page size' })
+  @ApiResponse({ status: HttpStatus.OK, type: PaginatedResponseDto })
+  async findMany(@Query() query: VacancyQueryRequestDto) {
+    const { data, totalCount } = await this.vacancyService.findMany(query);
+
+    return new PaginatedResponseDto(
+      plainToInstance(VacancyResponseDto, data),
+      totalCount,
+    );
+  }
+
+  @Get('queue')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary:
+      'Get paginated queue of active, unapplied vacancies matching a keyword',
+  })
+  @ApiQuery({
+    name: 'keyword',
+    required: true,
+    description: 'Keyword to filter by',
+  })
+  @ApiQuery({ name: 'page', required: false, description: 'Page number' })
+  @ApiQuery({ name: 'pageSize', required: false, description: 'Page size' })
+  @ApiResponse({ status: HttpStatus.OK, type: PaginatedResponseDto })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Unauthorized' })
-  async findAll() {
-    const vacancies = await this.vacancyService.findAll();
-    return plainToInstance(VacancyResponseDto, vacancies);
+  async findQueue(
+    @Query() query: VacancyQueueRequestDto,
+    @CurrentUser() currentUser: User,
+  ) {
+    const { data, totalCount } = await this.vacancyService.findQueue(
+      query,
+      currentUser.id,
+    );
+
+    return new PaginatedResponseDto(
+      plainToInstance(VacancyResponseDto, data),
+      totalCount,
+    );
   }
 
   @Delete(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete a vacancy' })
   @ApiParam({ name: 'id', description: 'Vacancy ID' })
   @ApiResponse({
@@ -74,6 +125,8 @@ export class VacancyController {
   }
 
   @Get('preview')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Preview vacancy details from URL' })
   @ApiQuery({ name: 'url', description: 'Job listing URL to scrape' })
   @ApiResponse({ status: HttpStatus.OK, type: VacancyPreviewResponseDto })

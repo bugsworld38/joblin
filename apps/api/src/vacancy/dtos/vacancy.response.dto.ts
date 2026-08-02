@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Expose } from 'class-transformer';
 
-import { Vacancy } from '../interfaces';
+import { Vacancy, VacancyStatus } from '../interfaces';
 
 export class VacancyResponseDto {
   @ApiProperty({
@@ -32,6 +32,21 @@ export class VacancyResponseDto {
   })
   @Expose()
   url: string;
+
+  @ApiProperty({
+    description: 'Vacancy status',
+    enum: VacancyStatus,
+    example: VacancyStatus.Active,
+  })
+  @Expose()
+  status: VacancyStatus;
+
+  @ApiProperty({
+    description: 'Last seen timestamp',
+    example: '2024-01-01T00:00:00.000Z',
+  })
+  @Expose()
+  lastSeenAt: Date;
 
   @ApiProperty({
     description: 'Creation timestamp',

@@ -13,4 +13,9 @@ export const envValidationSchema = Joi.object({
   POSTGRES_DB: Joi.string().required(),
 
   JWT_SECRET: Joi.string().min(32).required(),
+
+  WEB_ORIGIN: Joi.string().uri().default('http://localhost:5173'),
+  EXTENSION_ORIGIN: Joi.string()
+    .uri({ scheme: ['chrome-extension'] })
+    .optional(),
 });

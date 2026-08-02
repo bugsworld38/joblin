@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    container_name: joblin-api
+    command: npm run start:dev:poll
+    env_file:
+      - .env
+    environment:
+      - PORT=3001
+    ports:
+      - '3001:3001'
+    volumes:
+      - .:/home/node/app
+    networks:
+      - joblin
+
+networks:
+  joblin:
+    name: joblin_network
+    external: true

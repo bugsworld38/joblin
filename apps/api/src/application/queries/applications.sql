@@ -1,25 +1,62 @@
 /* @name FindApplicationById */
-SELECT * FROM applications WHERE id = :id;
+SELECT
+  id,
+  user_id AS "userId",
+  vacancy_id AS "vacancyId",
+  status,
+  notes,
+  created_at AS "createdAt",
+  updated_at AS "updatedAt"
+FROM applications WHERE id = :id;
 
 /* @name FindApplicationByUserAndVacancy */
-SELECT * FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId;
+SELECT
+  id,
+  user_id AS "userId",
+  vacancy_id AS "vacancyId",
+  status,
+  notes,
+  created_at AS "createdAt",
+  updated_at AS "updatedAt"
+FROM applications WHERE user_id = :userId AND vacancy_id = :vacancyId;
 
 /* @name CreateApplication */
 INSERT INTO applications (user_id, vacancy_id)
 VALUES (:userId, :vacancyId)
-RETURNING *;
+RETURNING
+  id,
+  user_id AS "userId",
+  vacancy_id AS "vacancyId",
+  status,
+  notes,
+  created_at AS "createdAt",
+  updated_at AS "updatedAt";
 
 /* @name UpdateApplicationStatus */
 UPDATE applications
 SET status = :status, updated_at = now()
 WHERE id = :id
-RETURNING *;
+RETURNING
+  id,
+  user_id AS "userId",
+  vacancy_id AS "vacancyId",
+  status,
+  notes,
+  created_at AS "createdAt",
+  updated_at AS "updatedAt";
 
 /* @name UpdateApplicationNotes */
 UPDATE applications
 SET notes = :notes, updated_at = now()
 WHERE id = :id
-RETURNING *;
+RETURNING
+  id,
+  user_id AS "userId",
+  vacancy_id AS "vacancyId",
+  status,
+  notes,
+  created_at AS "createdAt",
+  updated_at AS "updatedAt";
 
 /* @name DeleteApplication */
 DELETE FROM applications WHERE id = :id;
@@ -32,11 +69,11 @@ SELECT
   a.id,
   a.status,
   a.notes,
-  v.position_title,
-  v.company_name,
+  v.title AS "positionTitle",
+  v.company_name AS "companyName",
   v.url,
-  a.created_at,
-  a.updated_at
+  a.created_at AS "createdAt",
+  a.updated_at AS "updatedAt"
 FROM applications a
 JOIN vacancies v ON a.vacancy_id = v.id
 WHERE a.user_id = :userId

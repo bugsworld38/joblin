@@ -99,7 +99,7 @@ export class AuthController {
       throw new UnauthorizedException();
     }
 
-    response.clearCookie('refreshToken');
+    response.clearCookie('refreshToken', { sameSite: 'none', secure: true });
     await this.authService.logout(refreshToken);
   }
 
@@ -145,7 +145,7 @@ export class AuthController {
 
     response.cookie('refreshToken', token, {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: 'none',
       secure: true,
       maxAge: sevenDaysMs,
     });

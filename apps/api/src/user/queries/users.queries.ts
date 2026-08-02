@@ -28,16 +28,23 @@ const findUserByIdIR: any = {
       name: 'id',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 31, b: 33 }],
+      locs: [{ a: 136, b: 138 }],
     },
   ],
-  statement: 'SELECT * FROM users WHERE id = :id',
+  statement:
+    'SELECT\n  id,\n  email,\n  password_hash AS "passwordHash",\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"\nFROM users WHERE id = :id',
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM users WHERE id = :id
+ * SELECT
+ *   id,
+ *   email,
+ *   password_hash AS "passwordHash",
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
+ * FROM users WHERE id = :id
  * ```
  */
 export const findUserById = new PreparedQuery<
@@ -72,16 +79,23 @@ const findUserByEmailIR: any = {
       name: 'email',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 34, b: 39 }],
+      locs: [{ a: 139, b: 144 }],
     },
   ],
-  statement: 'SELECT * FROM users WHERE email = :email',
+  statement:
+    'SELECT\n  id,\n  email,\n  password_hash AS "passwordHash",\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"\nFROM users WHERE email = :email',
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT * FROM users WHERE email = :email
+ * SELECT
+ *   id,
+ *   email,
+ *   password_hash AS "passwordHash",
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
+ * FROM users WHERE email = :email
  * ```
  */
 export const findUserByEmail = new PreparedQuery<
@@ -127,7 +141,7 @@ const createUserIR: any = {
     },
   ],
   statement:
-    'INSERT INTO users (email, password_hash)\nVALUES (:email, :passwordHash)\nRETURNING *',
+    'INSERT INTO users (email, password_hash)\nVALUES (:email, :passwordHash)\nRETURNING\n  id,\n  email,\n  password_hash AS "passwordHash",\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"',
 };
 
 /**
@@ -135,7 +149,12 @@ const createUserIR: any = {
  * ```
  * INSERT INTO users (email, password_hash)
  * VALUES (:email, :passwordHash)
- * RETURNING *
+ * RETURNING
+ *   id,
+ *   email,
+ *   password_hash AS "passwordHash",
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * ```
  */
 export const createUser = new PreparedQuery<

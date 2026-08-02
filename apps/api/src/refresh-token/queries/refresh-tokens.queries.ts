@@ -32,16 +32,24 @@ const findRefreshTokenByTokenHashIR: any = {
       name: 'tokenHash',
       required: false,
       transform: { type: 'scalar' },
-      locs: [{ a: 48, b: 57 }],
+      locs: [{ a: 219, b: 228 }],
     },
   ],
-  statement: 'SELECT *\nFROM refresh_tokens\nWHERE token_hash = :tokenHash',
+  statement:
+    'SELECT\n  id,\n  user_id AS "userId",\n  token_hash AS "tokenHash",\n  is_revoked AS "isRevoked",\n  expires_at AS "expiresAt",\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"\nFROM refresh_tokens\nWHERE token_hash = :tokenHash',
 };
 
 /**
  * Query generated from SQL:
  * ```
- * SELECT *
+ * SELECT
+ *   id,
+ *   user_id AS "userId",
+ *   token_hash AS "tokenHash",
+ *   is_revoked AS "isRevoked",
+ *   expires_at AS "expiresAt",
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * FROM refresh_tokens
  * WHERE token_hash = :tokenHash
  * ```
@@ -98,7 +106,7 @@ const createRefreshTokenIR: any = {
     },
   ],
   statement:
-    'INSERT INTO refresh_tokens (user_id, token_hash, expires_at)\nVALUES (:userId, :tokenHash, :expiresAt)\nRETURNING *',
+    'INSERT INTO refresh_tokens (user_id, token_hash, expires_at)\nVALUES (:userId, :tokenHash, :expiresAt)\nRETURNING\n  id,\n  user_id AS "userId",\n  token_hash AS "tokenHash",\n  is_revoked AS "isRevoked",\n  expires_at AS "expiresAt",\n  created_at AS "createdAt",\n  updated_at AS "updatedAt"',
 };
 
 /**
@@ -106,7 +114,14 @@ const createRefreshTokenIR: any = {
  * ```
  * INSERT INTO refresh_tokens (user_id, token_hash, expires_at)
  * VALUES (:userId, :tokenHash, :expiresAt)
- * RETURNING *
+ * RETURNING
+ *   id,
+ *   user_id AS "userId",
+ *   token_hash AS "tokenHash",
+ *   is_revoked AS "isRevoked",
+ *   expires_at AS "expiresAt",
+ *   created_at AS "createdAt",
+ *   updated_at AS "updatedAt"
  * ```
  */
 export const createRefreshToken = new PreparedQuery<
